@@ -78,7 +78,7 @@
         <div class="form-group col-md-6">
           <input
             type="text"
-            class="form-control is-invalid"
+            class="form-control {{enderecoEstadoPrimitivo?'':(enderecoValido)?'is-valid':'is-invalid'}}" 
             placeholder="Endereço"
             autocomplete="off"
             minlength="5"
@@ -93,7 +93,7 @@
         <div class="form-group col-md-2">
           <input
             type="text"
-            class="form-control is-valid"
+            class="form-control {{numeroEstadoPrimitivo ? '' :numeroValido?'is-valid':'is-invalid'}}"
             placeholder="Número"
             autocomplete="off"
             minlength="1"
@@ -109,7 +109,7 @@
         <div class="form-group col-md-4">
           <input
             type="text"
-            class="form-control"
+            class="form-control {{complementoEstadoPrimitivo ? '' :complementoValido?'is-valid':''}}"
             placeholder="Complemento"
             autocomplete="off"
             [value]="complemento"
@@ -125,11 +125,11 @@
 
       <div class="form-row">
         <div class="form-group col-md-3">
-          <select class="form-control is-invalid"
+          <select class="form-control {{ formaDePagamentoEstadoPrimitivo?'':formaPagamentoValido ? 'is-valid' : 'is-invalid' }}"
           #selectFormaPagamento
           (change)="atualizaFormaDePagamento(selectFormaPagamento.value)"
           >
-            <option>Selecione uma opção</option>
+            <option value="">Selecione uma opção</option>
             <option value="dinheiro"  selected="{{formaDePagamento == 'dinheiro'?'selected:''}}"> Dinheiro </option>
             <option value="debito" selected="{{formaDePagamento == 'debito'?'selected:''}}"> Débito </option>
           </select>

@@ -11,34 +11,55 @@ export class OrdemCompraComponent implements OnInit {
   public complemento: string = '';
   public formaDePagamento: string = '';
 
-  public endercoValido!:boolean
-  public complementoValido!:boolean
-  public numeroValido!:boolean
-  public formaPagamentoValido!:boolean
+  public enderecoValido!: boolean;
+  public complementoValido!: boolean;
+  public numeroValido!: boolean;
+  public formaPagamentoValido!: boolean;
+
+  public enderecoEstadoPrimitivo: boolean = true;
+  public numeroEstadoPrimitivo: boolean = true;
+  public complementoEstadoPrimitivo: boolean = true;
+  public formaDePagamentoEstadoPrimitivo: boolean = true;
+  
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  public atualizaNumero(numero:string):void{
-    this.numero = numero
+  public atualizaNumero(numero: string): void {
+    this.numeroEstadoPrimitivo = false;
 
-  }
-
-  public atualizaEndereco(endereco:string):void{
-    if(endereco.length>3){
-      this.endercoValido = true
-    }else{
-      this.endercoValido = false
+    if (this.numero.length > 0) {
+      this.numeroValido = true;
+    } else {
+      this.numeroValido = false;
     }
-    this.endereco = endereco
+    this.numero = numero;
   }
 
-  public atualizaFormaDePagamento(formaDePagamento:string):void{
-    this.formaDePagamento = formaDePagamento
+  public atualizaEndereco(endereco: string): void {
+    this.enderecoEstadoPrimitivo = false
+    if (endereco.length > 3) {
+      this.enderecoValido = true;
+    } else {
+      this.enderecoValido = false;
+    }
+    this.endereco = endereco;
   }
 
-  public atualizaComplemento(complemento:string){
+  public atualizaFormaDePagamento(formaDePagamento: string): void {
+    this.formaDePagamento = formaDePagamento;
+    this.formaDePagamentoEstadoPrimitivo = false
+    if(this.formaDePagamento.length > 0) {
+        this.formaPagamentoValido = true
+    } else {
+        this.formaPagamentoValido = false
+    }
+  }
+
+  public atualizaComplemento(complemento: string) {
+    this.complementoEstadoPrimitivo = false;
+    if (this.complemento.length > 0) this.complementoValido = true;
     this.complemento = complemento;
   }
 }
