@@ -141,5 +141,13 @@
 			"id": 6,
 			"descricao": "Estrada Maria das Graças, 12, Salvador - BA "
 		}
+	],
+	"pedidos":[
+		{
+			"endereco": "rua pag",
+			"numero": "32",
+			"complemento": "magu",
+			"formaPagamento": "dinheiro"
+		}
 	]
 }
