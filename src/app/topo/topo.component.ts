@@ -1,47 +1,43 @@
+import { Observable, of, Subject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap } from 'rxjs';
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
+import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-topo',
   templateUrl: './topo.component.html',
   styleUrls: ['./topo.component.css'],
-  providers: [OfertasService],
+  providers: [ OfertasService ]
 })
 export class TopoComponent implements OnInit {
-  public ofertas!: Observable<Oferta[]>;
-  private subjectPesqusa: Subject<string> = new Subject<string>();
 
-  constructor(private ofertasService: OfertasService) {}
+  public ofertas!: Observable<Oferta[]>
+  private subjectPesquisa: Subject<string> = new Subject<string>()
+
+  constructor(private ofertasService: OfertasService) { }
 
   ngOnInit(): void {
-    this.ofertas = this.subjectPesqusa //retorno desejado
-    .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((termo: string) => {
-          console.log('requisão http termo:', termo);
-          if(termo.trim()===''){
-            return of<Oferta[]>([])
-          }
-          return this.ofertasService.pesquisarOfertas(termo);
-        }),
-       catchError((err:any)=>{
-          console.log(err);
+     this.ofertas = this.subjectPesquisa //retorno ao termino Oferta[]
+        .pipe(debounceTime(1000))  //executa a acao do switchMap apos 1 segundo
+        .pipe(distinctUntilChanged())  //para fazer pesquisas distintas
+        .pipe(switchMap((termo: string) => {
+            if(termo.trim() === '') {
+              //retornar um observable de array de ofertas vazio
+              return of<Oferta[]>([])
+            }
+            return this.ofertasService.pesquisarOfertas(termo)
+        }))
+        .pipe(catchError((err: any) => {
           return of<Oferta[]>([])
-          
-        })
-      );
+        }))
   }
 
   public pesquisa(termoDaBusca: string): void {
-    console.log("key",termoDaBusca);
-    this.subjectPesqusa.next(termoDaBusca);
-    
+      this.subjectPesquisa.next(termoDaBusca)
   }
 
-  public limpaPesquisa():void{
-    this.subjectPesqusa.next('')
+  public limpaPesquisa(): void {
+    this.subjectPesquisa.next('')
   }
 }
