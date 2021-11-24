@@ -17,7 +17,7 @@ import { DescricaoReduzida } from './utils/descricao-reduzida-pipe';
 import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { CarrinhoService } from './carrinho.service';
 
 
 @NgModule({
@@ -43,7 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CarrinhoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
